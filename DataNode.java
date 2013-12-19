@@ -28,8 +28,8 @@ public class DataNode {
 	Connection con;
 	public DataNode() 
 	{
-		this.masterIP = "54.235.60.113";//"54.196.140.87";
-                this.middleWareIP ="50.17.52.54"; //"23.21.9.190";    
+		this.masterIP = "23.22.232.19"; 
+                this.middleWareIP = "54.226.150.230";
 	}
 	
 	public String getMasterIP(){
