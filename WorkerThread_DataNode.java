@@ -275,6 +275,7 @@ public class WorkerThread_DataNode implements Runnable {
                 	    rs.close();
                 	    stmt.close();
                 	    con.close();
+			    System.out.println("after query exec");
                 	    String serverAddress = datanode.getmiddleWareIP();
                 	    Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
                 	    ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
