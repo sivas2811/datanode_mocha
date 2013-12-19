@@ -27,7 +27,7 @@ public class WorkerThread_DataNode implements Runnable {
         
     @Override
     public void run() {
-      //  System.out.println(Thread.currentThread().getName()+" Start. Command = "+input);
+        System.out.println(Thread.currentThread().getName()+" Start. Command = "+input);
         try {
                         processCommand(Thread.currentThread().getName());
                 } catch (IOException e) {
