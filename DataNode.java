@@ -53,19 +53,17 @@ public class DataNode {
                  });
 		 DataNode dataNode = new DataNode();
 		//Listen to messages from middleWare
-        ServerSocket listener = new ServerSocket(8000);
-        Socket socket;
-    
+	        ServerSocket listener = new ServerSocket(8000);
+        	Socket socket;
+   		System.out.println("connection received from middleware"); 
         
-        while (true) {
+	        while (true) {
         		socket = listener.accept();
         		BufferedReader in = new BufferedReader
             			(new InputStreamReader(socket.getInputStream()));   
-                String request = in.readLine();
-                Runnable worker = new WorkerThread_DataNode(request,dataNode);
-                executor.execute(worker);  
-                
-                   
-        }
+                	String request = in.readLine();
+	                Runnable worker = new WorkerThread_DataNode(request,dataNode);
+        	        executor.execute(worker);  
+        	}        
 	}
 }
