@@ -191,13 +191,10 @@ public class WorkerThread_DataNode implements Runnable {
         }
    
        else{
+		System.out.println("in else\n");
         	if(splits[1].equalsIgnoreCase("tc")){
         		// r;tc;topic(content),
         		try{
-        			
-        			
-            			
-
            			 String location = "jdbc:mysql://localhost:3306/mochadb";
            	         String user="root";
            	         String password = "root";
