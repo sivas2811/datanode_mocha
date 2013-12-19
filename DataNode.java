@@ -65,7 +65,7 @@ public class DataNode {
 	                Runnable worker = new WorkerThread_DataNode(request,dataNode,socket);
         	        executor.execute(worker);  
         	}       
-		socket.close();
-		listener.close(); 
+		//socket.close();
+		//listener.close(); 
 	}
 }
