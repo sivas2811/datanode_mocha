@@ -31,13 +31,12 @@ public class WorkerThread_DataNode implements Runnable {
     public void run() {
         System.out.println(Thread.currentThread().getName()+" Start. Command = "+input);
         try {
-                        processCommand(Thread.currentThread().getName());
-                } catch (IOException e) {
-                        e.printStackTrace();
-                } catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+              processCommand(Thread.currentThread().getName());
+        } catch (IOException e) {
+              e.printStackTrace();
+        } catch (SQLException e) {
+	      e.printStackTrace();
+	}
     }
  
     private void processCommand(String port) throws UnknownHostException, IOException, SQLException {
@@ -69,23 +68,30 @@ public class WorkerThread_DataNode implements Runnable {
         			
         			
         	         Statement stmt = con.createStatement();
-            		String sql = "INSERT INTO topic_content values('"
+            		 String sql = "INSERT INTO topic_content values('"
                         		+splits[2]+Math.random()+"','"+splits[3]+"','"+splits[4]+"',NOW());";
-            		System.out.println("SQL statement:" + sql);
-                    stmt.executeUpdate(sql);
+            		 //System.out.println("SQL statement:" + sql);
+                     	 stmt.executeUpdate(sql);
+
+			 /*String sql_count = "SELECT COUNT(*) FROM topic_contents;";
+			 ResultSet res = stmt.executeQuery(sql_count);
+			 while(res.next()
+                   	 PrintWriter writer = new PrintWriter("tc.txt", "UTF-8");
+			 writer.println();
+			 writer.close(); */
+
+                    	 stmt.close();
+                    	 con.close();
                     
-                    stmt.close();
-                    con.close();
-                    
-                    //send success to middleWare
-                    //String serverAddress = datanode.getmiddleWareIP();
-                    //System.out.println("Trying to create socket");
-                    //Socket s = new Socket(serverAddress,Integer.parseInt(splits[5]));
-                    PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
-                    out.println("success");
-		    out.close();
-                    //s.close();
-                    
+			 //send success to middleWare
+			 //String serverAddress = datanode.getmiddleWareIP();
+			 //System.out.println("Trying to create socket");
+			 //Socket s = new Socket(serverAddress,Integer.parseInt(splits[5]));
+			 PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
+			 out.println("success");
+			 out.close();
+			 //s.close();
+			    
                    
                    }
         		
