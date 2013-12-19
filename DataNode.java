@@ -15,6 +15,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 /**
  * A TCP server that runs on port 9090.  When a client connects, it
@@ -44,6 +50,33 @@ public class DataNode {
 		return this.con;
 	}
 	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
+		String location = "jdbc:mysql://localhost:3306/mochadb";
+                String user="root";
+                String password = "root";
+                Connection con = null;
+                try {
+                      Class.forName("com.mysql.jdbc.Driver");
+                      con =DriverManager.getConnection(location, user, password);
+                } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                      e.printStackTrace();
+                } catch (SQLException e) {
+                      // TODO Auto-generated catch block
+                      e.printStackTrace();
+                }
+
+                Statement stmt = con.createStatement();
+                String sql_tc = "delete from topic_content;";
+                String sql_ut = "delete from user_topic;";
+                String sql_uf = "delete from user_follow;";
+                stmt.executeUpdate(sql_tc);
+                stmt.executeUpdate(sql_ut);
+                stmt.executeUpdate(sql_uf);
+
+                stmt.close();
+                con.close();
+
+
 		 ExecutorService executor = Executors.newFixedThreadPool
                  (10, new ThreadFactory(){
                          public Thread newThread(Runnable runnable){
