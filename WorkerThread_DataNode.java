@@ -29,7 +29,7 @@ public class WorkerThread_DataNode implements Runnable {
         
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName()+" Start. Command = "+input);
+        //System.out.println(Thread.currentThread().getName()+" Start. Command = "+input);
         try {
               processCommand(Thread.currentThread().getName());
         } catch (IOException e) {
@@ -70,7 +70,7 @@ public class WorkerThread_DataNode implements Runnable {
         	         Statement stmt = con.createStatement();
             		 String sql = "INSERT INTO topic_content values('"
                         		+splits[2]+Math.random()+"','"+splits[3]+"','"+splits[4]+"',NOW());";
-            		 //System.out.println("SQL statement:" + sql);
+            		 ////System.out.println("SQL statement:" + sql);
                      	 stmt.executeUpdate(sql);
 
 			 /*String sql_count = "SELECT COUNT(*) FROM topic_contents;";
@@ -85,7 +85,7 @@ public class WorkerThread_DataNode implements Runnable {
                     
 			 //send success to middleWare
 			 //String serverAddress = datanode.getmiddleWareIP();
-			 //System.out.println("Trying to create socket");
+			 ////System.out.println("Trying to create socket");
 			 //Socket s = new Socket(serverAddress,Integer.parseInt(splits[5]));
 			 PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
 			 out.println("success");
@@ -96,7 +96,7 @@ public class WorkerThread_DataNode implements Runnable {
                    }
         		
                  catch(SQLException e){
-                	 System.out.println("in exception ");
+                	 //System.out.println("in exception ");
                 	 //String serverAddress = datanode.getmiddleWareIP();
                      	 //Socket s = new Socket(serverAddress,Integer.parseInt(splits[5]));
 	                 PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
@@ -128,12 +128,12 @@ public class WorkerThread_DataNode implements Runnable {
            	         Statement stmt = con.createStatement();
                 		String sql = "INSERT INTO user_topic values('"
                             		+splits[2]+Math.random()+"','"+splits[3]+"',NOW());";
-                		System.out.println("SQL statement:" + sql);
+                		//System.out.println("SQL statement:" + sql);
                         stmt.executeUpdate(sql);
                         
                         //send success to middleWare
                         //String serverAddress = datanode.getmiddleWareIP();
-                        //System.out.println("Trying to create socket to server" + serverAddress);
+                        ////System.out.println("Trying to create socket to server" + serverAddress);
                         //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
                         PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                         out.println("success");
@@ -143,7 +143,7 @@ public class WorkerThread_DataNode implements Runnable {
                         stmt.close();
                        }
                      catch(SQLException e){
-                    	 System.out.println("in exception ");
+                    	 //System.out.println("in exception ");
                     	 //String serverAddress = datanode.getmiddleWareIP();
                          //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
 	                 PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
@@ -177,12 +177,12 @@ public class WorkerThread_DataNode implements Runnable {
            	         Statement stmt = con.createStatement();
                 		String sql = "INSERT INTO user_follow values('"
                             		+splits[2]+"','"+splits[3]+"');";
-                		System.out.println("SQL statement:" + sql);
+                		//System.out.println("SQL statement:" + sql);
                         stmt.executeUpdate(sql);
                         
                         //send success to middleWare
                         //String serverAddress = datanode.getmiddleWareIP();
-                        //System.out.println("Trying to create socket");
+                        ////System.out.println("Trying to create socket");
                         //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
                         PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                         out.println("success");
@@ -192,7 +192,7 @@ public class WorkerThread_DataNode implements Runnable {
                         stmt.close();
                        }
                      catch(SQLException e){
-                    	 System.out.println("in exception ");
+                    	 //System.out.println("in exception ");
                     	 //String serverAddress = datanode.getmiddleWareIP();
                          //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
                          PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
@@ -205,7 +205,7 @@ public class WorkerThread_DataNode implements Runnable {
         }
    
        else{
-		System.out.println("in else\n");
+		//System.out.println("in else\n");
         	if(splits[1].equalsIgnoreCase("tc")){
         		// r;tc;topic(content),
         		try{
@@ -290,14 +290,14 @@ public class WorkerThread_DataNode implements Runnable {
                 	    rs.close();
                 	    stmt.close();
                 	    con.close();
-			    System.out.println("after query exec\t" + contentList);
+			    //System.out.println("after query exec\t" + contentList);
                 	    //String serverAddress = datanode.getmiddleWareIP();
                 	    //Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
                 	    ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
                 	    oos.writeObject(contentList);
                 	    oos.close();
                             //s.close();
-			    System.out.println("after socket");
+			    //System.out.println("after socket");
                        }
                      catch(SQLException e){
                     	 //String serverAddress = datanode.getmiddleWareIP();
@@ -330,11 +330,11 @@ public class WorkerThread_DataNode implements Runnable {
           			}
           			
           			
-          		 System.out.println("Input received is " +input);		
+          		 //System.out.println("Input received is " +input);		
           	         Statement stmt = con.createStatement();
            		String query = "SELECT following from user_follow" +
            				" WHERE user_name='"+splits[2]+"';";
-           		System.out.println("Read user_follow:"+ query);
+           		//System.out.println("Read user_follow:"+ query);
            		ResultSet rs = stmt.executeQuery(query);
            		ArrayList<String> contentList = new ArrayList<String>();
            	    while (rs.next()) {
@@ -345,7 +345,7 @@ public class WorkerThread_DataNode implements Runnable {
            	    con.close();
            	    //String serverAddress = datanode.getmiddleWareIP();
 			
-		    //System.out.println("Sending to middleware address" + serverAddress);
+		    ////System.out.println("Sending to middleware address" + serverAddress);
            	    //Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
            	    ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
            	    oos.writeObject(contentList);

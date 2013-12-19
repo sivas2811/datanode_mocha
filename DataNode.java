@@ -91,7 +91,7 @@ public class DataNode {
         
 	        while (true) {
         		socket = listener.accept();
-   			System.out.println("connection received from middleware"); 
+   			//System.out.println("connection received from middleware"); 
         		BufferedReader in = new BufferedReader
             			(new InputStreamReader(socket.getInputStream()));   
                 	String request = in.readLine();
