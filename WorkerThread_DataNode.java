@@ -15,11 +15,13 @@ public class WorkerThread_DataNode implements Runnable {
     private String input;
     private DataNode datanode;
     //private Connection con;
+    private Socket socket;
      
-    public WorkerThread_DataNode(String input,DataNode datanode){
+    public WorkerThread_DataNode(String input,DataNode datanode, Socket socket){
         this.input=input;
         this.datanode = datanode;
     //    this.con = datanode.getCon();
+	this.socket = socket;
     }
 
   // s;tc;topic;content (success), s;up;user;password(success), s;ut;user;topic (success)
@@ -76,23 +78,25 @@ public class WorkerThread_DataNode implements Runnable {
                     con.close();
                     
                     //send success to middleWare
-                    String serverAddress = datanode.getmiddleWareIP();
-                    System.out.println("Trying to create socket");
-                    Socket s = new Socket(serverAddress,Integer.parseInt(splits[5]));
-                    PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                    //String serverAddress = datanode.getmiddleWareIP();
+                    //System.out.println("Trying to create socket");
+                    //Socket s = new Socket(serverAddress,Integer.parseInt(splits[5]));
+                    PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                     out.println("success");
-                    s.close();
+		    out.close();
+                    //s.close();
                     
                    
                    }
         		
                  catch(SQLException e){
                 	 System.out.println("in exception ");
-                	 String serverAddress = datanode.getmiddleWareIP();
-                     Socket s = new Socket(serverAddress,Integer.parseInt(splits[5]));
-                     PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-                     out.println("failure");
-                     s.close();		
+                	 //String serverAddress = datanode.getmiddleWareIP();
+                     	 //Socket s = new Socket(serverAddress,Integer.parseInt(splits[5]));
+	                 PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
+        		 out.println("failure");
+			 out.close();
+                         //s.close();		
                    }
         		}
         		else if(splits[1].equalsIgnoreCase("ut")){
@@ -122,27 +126,29 @@ public class WorkerThread_DataNode implements Runnable {
                         stmt.executeUpdate(sql);
                         
                         //send success to middleWare
-                        String serverAddress = datanode.getmiddleWareIP();
-                        System.out.println("Trying to create socket to server" + serverAddress);
-                        Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
-                        PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                        //String serverAddress = datanode.getmiddleWareIP();
+                        //System.out.println("Trying to create socket to server" + serverAddress);
+                        //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
+                        PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                         out.println("success");
-                        s.close();
+			out.close();
+                        //s.close();
                         con.close();
                         stmt.close();
                        }
                      catch(SQLException e){
                     	 System.out.println("in exception ");
-                    	 String serverAddress = datanode.getmiddleWareIP();
-                         Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
-                         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-                         out.println("failure");
-                         s.close();		
+                    	 //String serverAddress = datanode.getmiddleWareIP();
+                         //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
+	                 PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
+        		 out.println("failure");
+			 out.close();
+                         //s.close();		
                        }
                 	
             	}
         	
-        		else {
+        	else {
         			try{
 
            			 String location = "jdbc:mysql://localhost:3306/mochadb";
@@ -169,22 +175,24 @@ public class WorkerThread_DataNode implements Runnable {
                         stmt.executeUpdate(sql);
                         
                         //send success to middleWare
-                        String serverAddress = datanode.getmiddleWareIP();
-                        System.out.println("Trying to create socket");
-                        Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
-                        PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                        //String serverAddress = datanode.getmiddleWareIP();
+                        //System.out.println("Trying to create socket");
+                        //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
+                        PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                         out.println("success");
-                        s.close();
+			out.close();
+                        //s.close();
                         con.close();
                         stmt.close();
                        }
                      catch(SQLException e){
                     	 System.out.println("in exception ");
-                    	 String serverAddress = datanode.getmiddleWareIP();
-                         Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
-                         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                    	 //String serverAddress = datanode.getmiddleWareIP();
+                         //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
+                         PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                          out.println("failure");
-                         s.close();		
+			 out.close();
+                         //s.close();		
                        }
                 	
             	}
@@ -224,20 +232,21 @@ public class WorkerThread_DataNode implements Runnable {
             	    rs.close();
             	    stmt.close();
             	    con.close();
-            	    String serverAddress = datanode.getmiddleWareIP();
-            	    Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
-            	    ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+            	    //String serverAddress = datanode.getmiddleWareIP();
+            	    //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
+            	    ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
             	    oos.writeObject(contentList);
             	    oos.close();
             	    
-                    s.close();
+                    //s.close();
                    }
                  catch(SQLException e){
-                	 String serverAddress = datanode.getmiddleWareIP();
-                     Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
-                     PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                	 //String serverAddress = datanode.getmiddleWareIP();
+                     //Socket s = new Socket(serverAddress,Integer.parseInt(splits[4]));
+                     PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                      out.println("failure");
-                     s.close();		
+		     out.close();
+                     //s.close();		
                    }
         		}
         	else if(splits[1].equalsIgnoreCase("ut")) {
@@ -276,20 +285,21 @@ public class WorkerThread_DataNode implements Runnable {
                 	    stmt.close();
                 	    con.close();
 			    System.out.println("after query exec\t" + contentList);
-                	    String serverAddress = datanode.getmiddleWareIP();
-                	    Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
-                	    ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+                	    //String serverAddress = datanode.getmiddleWareIP();
+                	    //Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
+                	    ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
                 	    oos.writeObject(contentList);
                 	    oos.close();
-                            s.close();
+                            //s.close();
 			    System.out.println("after socket");
                        }
                      catch(SQLException e){
-                    	 String serverAddress = datanode.getmiddleWareIP();
-                         Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
-                         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                    	 //String serverAddress = datanode.getmiddleWareIP();
+                         //Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
+                         PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                          out.println("failure");
-                         s.close();		
+			 out.close();
+                         //s.close();		
                        }
                 	
             	}
@@ -297,9 +307,6 @@ public class WorkerThread_DataNode implements Runnable {
         	else  {
    			 //  r;ut;user(topic)
    			try{
-   				
-   				
-           			
 
           			 String location = "jdbc:mysql://localhost:3306/mochadb";
           	         String user="root";
@@ -330,22 +337,22 @@ public class WorkerThread_DataNode implements Runnable {
            	    rs.close();
            	    stmt.close();
            	    con.close();
-           	    String serverAddress = datanode.getmiddleWareIP();
+           	    //String serverAddress = datanode.getmiddleWareIP();
 			
-		    System.out.println("Sending to middleware address" + serverAddress);
-           	    Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
-			System.out.println("I am here yaya");
-           	    ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+		    //System.out.println("Sending to middleware address" + serverAddress);
+           	    //Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
+           	    ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
            	    oos.writeObject(contentList);
            	    oos.close();
-                   s.close();
+                    //s.close();
                   }
                 catch(SQLException e){
-               	 String serverAddress = datanode.getmiddleWareIP();
-                    Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
-                    PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+               	    //String serverAddress = datanode.getmiddleWareIP();
+                    //Socket s = new Socket(serverAddress,Integer.parseInt(splits[3]));
+                    PrintWriter out = new PrintWriter(this.socket.getOutputStream(), true);
                     out.println("failure");
-                    s.close();		
+		    out.close();
+                    //s.close();		
                   }
            	
        	}

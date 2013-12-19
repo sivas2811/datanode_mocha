@@ -62,8 +62,10 @@ public class DataNode {
         		BufferedReader in = new BufferedReader
             			(new InputStreamReader(socket.getInputStream()));   
                 	String request = in.readLine();
-	                Runnable worker = new WorkerThread_DataNode(request,dataNode);
+	                Runnable worker = new WorkerThread_DataNode(request,dataNode,socket);
         	        executor.execute(worker);  
-        	}        
+        	}       
+		socket.close();
+		listener.close(); 
 	}
 }
