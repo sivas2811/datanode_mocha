@@ -1,3 +1,4 @@
+pkill -9 java
 git pull
 javac DataNode.java
 echo "Compile Done. Starting executable" 
